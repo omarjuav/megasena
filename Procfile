@@ -1,1 +1,1 @@
-web: gunicorn api_megasena:app
+web: gunicorn app:app
