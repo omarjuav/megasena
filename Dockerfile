@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     libgbm1 \
     xdg-utils \
-    chromium
+    chromium \
+    xvfb  # Instalar Xvfb
 
 # Instalar dependências Python
 WORKDIR /app
@@ -28,11 +29,8 @@ RUN pip install -r requirements.txt
 # Copiar o restante do código
 COPY . /app
 
-# Definir variável de ambiente para o caminho do Chrome
-ENV PATH="/usr/bin/chromium:${PATH}"
-
 # Expor a porta onde o app Flask vai rodar
 EXPOSE 5000
 
-# Comando para rodar o aplicativo
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
+# Comando para rodar o aplicativo com Xvfb
+CMD ["xvfb-run", "gunicorn", "app:app", "-b", "0.0.0.0:5000"]
