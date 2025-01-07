@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import subprocess
+import os
 
 # Configuração do Flask
 app = Flask(__name__)
@@ -16,16 +17,18 @@ def megasena():
     # Configurar o navegador em modo headless
     options = Options()
     options.headless = True
-    #options.binary_location = "/usr/bin/chromium"  # Localização do Chromium no Render
     
+    # Caso necessário, defina o caminho para o Chromium no Render (se já instalado)
+    # options.binary_location = "/usr/bin/chromium"  # Localização do Chromium no Render
+    
+    # Instalar o driver do Chrome e configurar o serviço
     service = Service(ChromeDriverManager().install())
+    
     # Inicializar o WebDriver com o Chrome
-    #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver = webdriver.Chrome(service=service, options=options)
 
-    
     try:
-        # Acessar o site
+        # Acessar o site da Mega-Sena
         driver.get("https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx")
 
         # Selecionar os elementos com ng-repeat específico e as classes ng-binding e ng-scope
@@ -50,5 +53,12 @@ def megasena():
         # Fechar o navegador
         driver.quit()
 
+# Rota inicial para testar a aplicação
+@app.route("/")
+def index():
+    return "Bem-vindo à MegaSena API!"
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    # Obter a porta da variável de ambiente do Render ou usar a porta 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
