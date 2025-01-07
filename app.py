@@ -31,7 +31,7 @@ def megasena():
     try:
         # Acessar o site da Mega-Sena
         driver.get("https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx")
-
+        driver.maximize_window()
         time.sleep(10)
         
         # Selecionar os elementos com ng-repeat específico e as classes ng-binding e ng-scope
