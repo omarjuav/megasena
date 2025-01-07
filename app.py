@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+import subprocess
+print(subprocess.run(["which", "chromium"], capture_output=True, text=True).stdout)
 
 # Configuração do Flask
 app = Flask(__name__)
