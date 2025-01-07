@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import subprocess
-print(subprocess.run(["which", "chromium"], capture_output=True, text=True).stdout)
 
 # Configuração do Flask
 app = Flask(__name__)
@@ -17,11 +16,14 @@ def megasena():
     # Configurar o navegador em modo headless
     options = Options()
     options.headless = True
-    options.binary_location = "/usr/bin/chromium"  # Localização do Chromium no Render
-
+    #options.binary_location = "/usr/bin/chromium"  # Localização do Chromium no Render
+    
+    service = Service(ChromeDriverManager().install())
     # Inicializar o WebDriver com o Chrome
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(service=service, options=options)
 
+    
     try:
         # Acessar o site
         driver.get("https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx")
