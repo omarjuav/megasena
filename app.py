@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import subprocess
+import time
 import os
 
 # Configuração do Flask
@@ -31,6 +32,8 @@ def megasena():
         # Acessar o site da Mega-Sena
         driver.get("https://loterias.caixa.gov.br/Paginas/Mega-Sena.aspx")
 
+        time.sleep(10)
+        
         # Selecionar os elementos com ng-repeat específico e as classes ng-binding e ng-scope
         elementos = driver.find_elements(
             By.XPATH,
