@@ -3,8 +3,8 @@ from flask_cors import CORS
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 
 # Configuração do Flask
 app = Flask(__name__)
@@ -15,8 +15,9 @@ def megasena():
     # Configurar o navegador em modo headless
     options = Options()
     options.headless = True
+    options.binary_location = "/usr/bin/chromium"  # Localização do Chromium no Render
 
-    # Configurar o WebDriver do Chrome
+    # Inicializar o WebDriver com o Chrome
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     try:
